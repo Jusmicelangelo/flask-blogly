@@ -59,16 +59,15 @@ class UserModelTestCase(TestCase):
             self.assertEqual(resp.status_code, 200)
             self.assertIsNot("John", html)
 
-    # UNFORTUNATELY I cannot find the mistake why I get a 400 error code
-    # def test_update_user(self):
-    #     with app.test_client() as client:
-               
-    #         resp = client.post(f'/users/{self.user_id}/edit', 
-	# 			data={'first_name': 'Gustav', 'last_name': 'Wiesl', 'profile_image': 'www.photos.com'})
-    #         html= resp.get_data(as_text=True)
 
-    #         self.assertEqual(resp.status_code, 200)
-    #         self.assertEqual('Gustav', html),
-    #         self.assertEqual('Wiesl', html),
-    #         self.assertEqual('www.photos.com', html),
+    def test_update_user(self):
+        with app.test_client() as client:
+               
+            resp = client.post(f'/users/{self.user_id}/edit', 
+				data={'first_name': 'Gustav', 'last_name': 'Wiesl', 'image_url': 'www.photos.com'},
+                follow_redirects=True)
+            html= resp.get_data(as_text=True)
+
+            self.assertEqual(resp.status_code, 200)
+            self.assertIn("Gustav Wiesl", html)   
 
