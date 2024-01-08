@@ -4,7 +4,7 @@ db = SQLAlchemy()
 
 """Models for Blogly."""
 
-DEFAULT_IMAGE = "https://unsplash.com/de/fotos/ein-3d-bild-eines-mannes-mit-roten-linien-auf-seinem-korper-WWQzZO6kORA"
+DEFAULT_IMAGE = "https://images.unsplash.com/photo-1704278921589-ac35120085dd?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzNHx8fGVufDB8fHx8fA%3D%3D"
 
 class User(db.Model):
     """User."""
