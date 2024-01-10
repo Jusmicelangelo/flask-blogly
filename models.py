@@ -30,7 +30,7 @@ class User(db.Model):
                                nullable = False,
                                default = DEFAULT_IMAGE)
     
-    posts = db.relationship("Post", backref="user")
+    posts = db.relationship("Post", backref="user", cascade="all, delete-orphan")
     
     def greet(self):
         return f"Logged in as {self.first_name} {self.last_name}"
@@ -56,7 +56,13 @@ class Post(db.Model):
                             nullable = False,
                             default = datetime.datetime.now)
     
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable = False)
+
+    @property
+    def friendly_date(self):
+        """friendly formatted date."""
+
+        return self.created_at.strftime("%a %b %-d  %Y, %-I:%M %p")
     
 def connect_db(app):
     """Connect to database"""
