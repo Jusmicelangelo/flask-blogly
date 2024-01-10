@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+import datetime
 
 db = SQLAlchemy()
 
@@ -29,8 +30,33 @@ class User(db.Model):
                                nullable = False,
                                default = DEFAULT_IMAGE)
     
+    posts = db.relationship("Post", backref="user")
+    
     def greet(self):
         return f"Logged in as {self.first_name} {self.last_name}"
+    
+
+    
+class Post(db.Model):
+    """Posts"""
+
+    __tablename__ = "posts"
+
+    id = db.Column (db.Integer,
+                    primary_key = True,
+                    autoincrement = True)
+    
+    title = db.Column (db.Text,
+                       nullable = False)
+    
+    content = db.Column (db.Text,
+                         nullable = False)
+    
+    created_at = db.Column (db.DateTime,
+                            nullable = False,
+                            default = datetime.datetime.now)
+    
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
     
 def connect_db(app):
     """Connect to database"""
